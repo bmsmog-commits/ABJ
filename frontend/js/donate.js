@@ -81,7 +81,11 @@ class DonationUI {
     try {
       const data = await DonationAPI.createDonation(donationData);
 
-      this.showToast('Donation initiated! Redirecting to payment...', 'success');
+      const message = donationData.gateway === 'transfer'
+        ? 'Donation received! We will share the transfer details with you shortly.'
+        : 'Donation initiated! Redirecting to payment...';
+
+      this.showToast(message, 'success');
 
       // Redirect to payment URL
       setTimeout(() => {

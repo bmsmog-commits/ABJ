@@ -27,7 +27,10 @@
       });
 
       if (response?.paymentUrl) {
-        alert("Donation initiated. Redirecting to payment...");
+        const message = gateway === "transfer"
+          ? "Donation received. You will be contacted with transfer details shortly."
+          : "Donation initiated. Redirecting to payment...";
+        alert(message);
         window.location.href = response.paymentUrl;
       } else {
         alert("Donation recorded successfully.");

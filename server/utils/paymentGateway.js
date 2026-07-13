@@ -1,9 +1,15 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const createPaymentSession = async ({ name, email, amount, currency = 'USD', gateway = 'stripe' }) => {
+  const returnBase = process.env.PAYMENT_RETURN_URL || 'https://abjfoundation.ngo';
+
+  if (gateway === 'transfer') {
+    const paymentSessionId = Math.random().toString(36).substring(2, 12);
+    return `${returnBase}/payment-success?gateway=transfer&amount=${amount}&currency=${currency}&session=${paymentSessionId}`;
+  }
+
   if (gateway !== 'stripe') {
     // For other gateways, return a mock URL for now
-    const returnBase = process.env.PAYMENT_RETURN_URL || 'https://abjfoundation.ngo';
     const paymentSessionId = Math.random().toString(36).substring(2, 12);
     return `${returnBase}/payment-success?gateway=${gateway}&amount=${amount}&currency=${currency}&session=${paymentSessionId}`;
   }

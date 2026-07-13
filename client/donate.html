@@ -1,51 +1,54 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#007bff">
-  <link rel="canonical" href="https://abjfoundation.ngo/donate.html">
-  <title>Donate - ABJ Foundation</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#007bff" />
+    <link rel="canonical" href="https://abjfoundation.ngo/donate.html" />
+    <title>Donate - ABJ Foundation</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
 
-<body>
+  <body>
+    <div class="container">
+      <form id="donateForm">
+        <h2>Support a Cause</h2>
 
-<div class="container">
-  <form id="donateForm">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <input type="email" id="email" placeholder="Your Email" required />
+        <input
+          type="number"
+          id="amount"
+          placeholder="Enter Amount"
+          min="1"
+          required
+        />
 
-    <h2>Support a Cause</h2>
+        <select id="currency">
+          <option value="USD">USD ($)</option>
+          <option value="EUR">EUR (€)</option>
+          <option value="GBP">GBP (£)</option>
+          <option value="NGN">NGN (₦)</option>
+          <option value="CAD">CAD ($)</option>
+          <option value="AUD">AUD ($)</option>
+          <option value="INR">INR (₹)</option>
+          <option value="JPY">JPY (¥)</option>
+          <option value="ZAR">ZAR (R)</option>
+        </select>
 
-    <input type="text" id="name" placeholder="Your Name" required>
-    <input type="email" id="email" placeholder="Your Email" required>
-    <input type="number" id="amount" placeholder="Enter Amount" min="1" required>
+        <select id="gateway">
+          <option value="stripe">Stripe (Card payments)</option>
+          <option value="paypal">PayPal</option>
+          <option value="paystack">Paystack</option>
+          <option value="flutterwave">Flutterwave</option>
+          <option value="transfer">Bank Transfer</option>
+        </select>
 
-    <select id="currency">
-      <option value="USD">USD ($)</option>
-      <option value="EUR">EUR (€)</option>
-      <option value="GBP">GBP (£)</option>
-      <option value="NGN">NGN (₦)</option>
-      <option value="CAD">CAD ($)</option>
-      <option value="AUD">AUD ($)</option>
-      <option value="INR">INR (₹)</option>
-      <option value="JPY">JPY (¥)</option>
-      <option value="ZAR">ZAR (R)</option>
-    </select>
+        <button type="submit">Donate Now</button>
+      </form>
+    </div>
 
-    <select id="gateway">
-      <option value="stripe">Stripe (Card payments)</option>
-      <option value="paypal">PayPal</option>
-      <option value="paystack">Paystack</option>
-      <option value="flutterwave">Flutterwave</option>
-    </select>
-
-    <button type="submit">Donate Now</button>
-
-  </form>
-</div>
-
-<script src="js/api.js"></script>
-<script src="js/donate.js"></script>
-
-</body>
+    <script src="js/api.js"></script>
+    <script src="js/donate.js"></script>
+  </body>
 </html>
