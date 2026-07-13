@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#007bff">
+    <link rel="canonical" href="https://abjfoundation.ngo/request-help.html">
+    <title>Request Help - ABJ Foundation</title>
+    <meta name="description" content="Request help from ABJ Foundation.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Alerts Container -->
+    <div id="alerts-container"></div>
+
+    <!-- Loader -->
+    <div id="loader" class="loading hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-logo">
+                <i class="fas fa-heart"></i> ABJ Foundation
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <a href="dashboard.html" class="btn btn-outline">Dashboard</a>
+                <button id="logout-btn" class="btn btn-primary">Logout</button>
+                <button class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 80px 0; text-align: center; margin-top: 60px;">
+        <div class="container">
+            <h1>Request Help</h1>
+            <p>Tell us how we can support you</p>
+        </div>
+    </section>
+
+    <div class="wrapper" style="margin-top: 0;">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="dashboard.html">
+                        <i class="fas fa-chart-line"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="donate.html">
+                        <i class="fas fa-heart"></i>
+                        Make Donation
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="request-help.html">
+                        <i class="fas fa-hands-helping"></i>
+                        Request Help
+                    </a>
+                </li>
+                <li>
+                    <a href="notifications.html">
+                        <i class="fas fa-bell"></i>
+                        Notifications
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        Profile
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <h2 style="margin-bottom: 30px;">Submit Help Request</h2>
+
+                <div class="grid grid-2">
+                    <!-- Help Request Form -->
+                    <div>
+                        <div class="card">
+                            <form id="help-request-form" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for="category">Category of Help *</label>
+                                    <select id="category" name="category" required>
+                                        <option value="">Select a category</option>
+                                        <option value="widow-support">Widow Support</option>
+                                        <option value="medical-aid">Medical Aid</option>
+                                        <option value="food-support">Food Support</option>
+                                        <option value="child-education">Child Education</option>
+                                        <option value="shelter">Shelter</option>
+                                        <option value="emergency-relief">Emergency Relief</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="description">Describe Your Situation *</label>
+                                    <textarea id="description" name="description" placeholder="Please provide details about your situation..." rows="6" required></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="document">Supporting Document (Optional)</label>
+                                    <input type="file" id="document" name="document" accept=".pdf,.doc,.docx,.jpg,.png">
+                                    <small style="color: #6b7280; display: block; margin-top: 5px;">
+                                        Max 5MB. Accepted: PDF, DOC, DOCX, JPG, PNG
+                                    </small>
+                                </div>
+
+                                <div class="form-check">
+                                    <input type="checkbox" id="agree" name="agree" required>
+                                    <label for="agree">I certify that the information provided is accurate and truthful</label>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top: 20px;">
+                                    <i class="fas fa-paper-plane"></i> Submit Request
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Info Cards -->
+                    <div>
+                        <!-- Process Card -->
+                        <div class="card">
+                            <h4>How It Works</h4>
+                            <div style="display: flex; flex-direction: column; gap: 15px;">
+                                <div style="display: flex; gap: 15px;">
+                                    <div style="background: #2563eb; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+                                    <div>
+                                        <strong>Submit Request</strong>
+                                        <p style="margin: 5px 0 0 0; font-size: 0.875rem; color: #6b7280;">Fill out the form with details</p>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 15px;">
+                                    <div style="background: #2563eb; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+                                    <div>
+                                        <strong>We Review</strong>
+                                        <p style="margin: 5px 0 0 0; font-size: 0.875rem; color: #6b7280;">Our team verifies your request</p>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 15px;">
+                                    <div style="background: #2563eb; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+                                    <div>
+                                        <strong>Get Support</strong>
+                                        <p style="margin: 5px 0 0 0; font-size: 0.875rem; color: #6b7280;">Receive help if approved</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Categories Card -->
+                        <div class="card">
+                            <h4>Help Categories</h4>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <div style="padding: 10px; background: #f8fafc; border-left: 4px solid #2563eb; border-radius: 4px;">
+                                    <strong>Widow Support</strong>
+                                    <p style="margin: 5px 0 0 0; font-size: 0.875rem;">Financial and social support</p>
+                                </div>
+                                <div style="padding: 10px; background: #f8fafc; border-left: 4px solid #10b981; border-radius: 4px;">
+                                    <strong>Medical Aid</strong>
+                                    <p style="margin: 5px 0 0 0; font-size: 0.875rem;">Healthcare assistance</p>
+                                </div>
+                                <div style="padding: 10px; background: #f8fafc; border-left: 4px solid #f59e0b; border-radius: 4px;">
+                                    <strong>Food Support</strong>
+                                    <p style="margin: 5px 0 0 0; font-size: 0.875rem;">Emergency nutrition</p>
+                                </div>
+                                <div style="padding: 10px; background: #f8fafc; border-left: 4px solid #8b5cf6; border-radius: 4px;">
+                                    <strong>Child Education</strong>
+                                    <p style="margin: 5px 0 0 0; font-size: 0.875rem;">School & training</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Info Box -->
+                        <div style="background: #f0f9ff; padding: 15px; border-radius: 6px; border-left: 4px solid #2563eb;">
+                            <p style="margin: 0; font-size: 0.875rem;">
+                                <i class="fas fa-info-circle" style="color: #2563eb; margin-right: 8px;"></i>
+                                <strong>Note:</strong> Requests are reviewed within 5-7 business days. Please ensure all information is accurate.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>&copy; 2024 ABJ Foundation. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/request.js"></script>
+    <script>
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            AuthManager.requireAuth();
+        });
+    </script>
+</body>
+</html>

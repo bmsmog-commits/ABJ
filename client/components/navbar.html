@@ -1,0 +1,209 @@
+<!-- Reusable Navbar Component -->
+<nav class="navbar">
+    <div class="navbar-container">
+        <a href="https://abjfoundation.ngo" class="navbar-logo" target="_blank" rel="noopener">
+            <i class="fas fa-heart"></i> ABJ Foundation
+        </a>
+        
+        <ul class="navbar-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+
+        <div class="navbar-actions">
+            <div class="navbar-user" id="navbar-user" style="display: none; display: flex; align-items: center; gap: 15px;">
+                <!-- Language Selector -->
+                <div class="language-selector" style="position: relative;">
+                    <select id="language-select" style="padding: 6px 10px; border-radius: 4px; border: 1px solid #e2e8f0; cursor: pointer; font-size: 0.875rem;">
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="es">Español</option>
+                        <option value="de">Deutsch</option>
+                        <option value="zh">中文</option>
+                    </select>
+                </div>
+
+                <!-- Currency Selector -->
+                <div class="currency-selector" style="position: relative;">
+                    <select id="currency-select" style="padding: 6px 10px; border-radius: 4px; border: 1px solid #e2e8f0; cursor: pointer; font-size: 0.875rem;">
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                        <option value="NGN">NGN</option>
+                    </select>
+                </div>
+
+                <!-- Notifications -->
+                <div class="notification-icon" style="position: relative; cursor: pointer;" onclick="toggleNotificationDropdown()">
+                    <i class="fas fa-bell" style="font-size: 1.2rem; color: white;"></i>
+                    <span id="notification-badge" style="position: absolute; top: -8px; right: -8px; background: #dc3545; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; display: none;">0</span>
+                    
+                    <!-- Notification Dropdown -->
+                    <div id="notification-dropdown" style="position: absolute; top: 100%; right: 0; background: white; border: 1px solid #e2e8f0; border-radius: 8px; width: 350px; max-height: 400px; overflow-y: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: none; z-index: 1000; margin-top: 10px;">
+                        <div style="padding: 15px; border-bottom: 1px solid #e2e8f0; font-weight: 600; color: #212529;">Notifications</div>
+                        <div id="notification-list" style="padding: 10px;"></div>
+                        <div style="padding: 10px; border-top: 1px solid #e2e8f0; text-align: center;">
+                            <a href="notifications.html" style="color: #0B5ED7; font-size: 0.9rem;">View All</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Menu -->
+                <div class="user-menu" style="position: relative;">
+                    <button onclick="toggleUserMenu()" style="background: none; border: none; color: white; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        <img id="navbar-avatar" src="https://via.placeholder.com/32" alt="Avatar" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">
+                        <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
+                    </button>
+                    
+                    <!-- User Dropdown -->
+                    <div id="user-dropdown" style="position: absolute; top: 100%; right: 0; background: white; border: 1px solid #e2e8f0; border-radius: 8px; width: 200px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: none; z-index: 1000; margin-top: 8px;">
+                        <div style="padding: 12px 15px; border-bottom: 1px solid #e2e8f0; font-weight: 600; color: #212529; font-size: 0.9rem;">
+                            <div id="navbar-user-name">User</div>
+                            <small style="color: #6c757d;" id="navbar-user-email">user@email.com</small>
+                        </div>
+                        <a href="dashboard.html" style="display: block; padding: 10px 15px; color: #212529; text-decoration: none; border-bottom: 1px solid #e2e8f0;">
+                            <i class="fas fa-chart-line"></i> Dashboard
+                        </a>
+                        <a href="profile.html" style="display: block; padding: 10px 15px; color: #212529; text-decoration: none; border-bottom: 1px solid #e2e8f0;">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                        <a href="donate.html" style="display: block; padding: 10px 15px; color: #212529; text-decoration: none; border-bottom: 1px solid #e2e8f0;">
+                            <i class="fas fa-heart"></i> Make Donation
+                        </a>
+                        <button onclick="logout()" style="width: 100%; text-align: left; background: none; border: none; padding: 10px 15px; color: #dc3545; cursor: pointer; font-size: 0.95rem;">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navbar-guest" id="navbar-guest">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="signup.html" class="btn btn-primary">Signup</a>
+            </div>
+
+            <button class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<script>
+    // Initialize navbar
+    document.addEventListener('DOMContentLoaded', () => {
+        updateNavbar();
+        loadNotificationBadge();
+    });
+
+    function updateNavbar() {
+        const user = AuthManager.getUser();
+        const token = AuthManager.getToken();
+
+        if (user && token) {
+            // Show user menu, hide guest menu
+            document.getElementById('navbar-user').style.display = 'flex';
+            document.getElementById('navbar-guest').style.display = 'none';
+            
+            document.getElementById('navbar-user-name').textContent = user.name || 'User';
+            document.getElementById('navbar-user-email').textContent = user.email || '';
+            
+            if (user.avatar) {
+                document.getElementById('navbar-avatar').src = user.avatar;
+            }
+        } else {
+            // Show guest menu, hide user menu
+            document.getElementById('navbar-user').style.display = 'none';
+            document.getElementById('navbar-guest').style.display = 'flex';
+        }
+    }
+
+    function toggleMobileMenu() {
+        const menu = document.querySelector('.navbar-menu');
+        if (menu) {
+            menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+        }
+    }
+
+    function toggleUserMenu() {
+        const dropdown = document.getElementById('user-dropdown');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        
+        // Close notification dropdown
+        document.getElementById('notification-dropdown').style.display = 'none';
+    }
+
+    function toggleNotificationDropdown() {
+        const dropdown = document.getElementById('notification-dropdown');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        
+        // Close user dropdown
+        document.getElementById('user-dropdown').style.display = 'none';
+        
+        // Load recent notifications
+        loadRecentNotifications();
+    }
+
+    async function loadRecentNotifications() {
+        try {
+            const notifications = await NotificationManager.loadNotifications(5);
+            const list = document.getElementById('notification-list');
+            
+            if (notifications.length === 0) {
+                list.innerHTML = '<div style="padding: 20px; text-align: center; color: #6c757d;">No notifications</div>';
+                return;
+            }
+            
+            list.innerHTML = notifications.map(n => NotificationManager.getNotificationHTML(n)).join('');
+        } catch (error) {
+            console.error('Failed to load notifications:', error);
+        }
+    }
+
+    async function loadNotificationBadge() {
+        try {
+            const notifications = await NotificationManager.loadNotifications();
+            const unreadCount = NotificationManager.getUnreadCount();
+            
+            if (unreadCount > 0) {
+                const badge = document.getElementById('notification-badge');
+                badge.textContent = unreadCount > 9 ? '9+' : unreadCount;
+                badge.style.display = 'flex';
+            }
+        } catch (error) {
+            console.error('Failed to load notification badge:', error);
+        }
+    }
+
+    function logout() {
+        if (confirm('Are you sure you want to logout?')) {
+            AuthManager.logout();
+        }
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.user-menu') && !e.target.closest('.notification-icon')) {
+            document.getElementById('user-dropdown').style.display = 'none';
+            document.getElementById('notification-dropdown').style.display = 'none';
+        }
+    });
+
+    // Language change handler
+    document.getElementById('language-select')?.addEventListener('change', (e) => {
+        localStorage.setItem('language', e.target.value);
+        // TODO: Implement language switching
+        console.log('Language changed to:', e.target.value);
+    });
+
+    // Currency change handler
+    document.getElementById('currency-select')?.addEventListener('change', (e) => {
+        localStorage.setItem('currency', e.target.value);
+        // TODO: Implement currency conversion
+        console.log('Currency changed to:', e.target.value);
+    });
+</script>

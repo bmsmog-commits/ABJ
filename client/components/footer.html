@@ -1,0 +1,163 @@
+<!-- Reusable Footer Component -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <!-- About Section -->
+            <div class="footer-section">
+                <h3>ABJ Foundation</h3>
+                <p>Empowering lives through compassion and support. We are dedicated to helping the needy worldwide, providing assistance in education, healthcare, food, and shelter.</p>
+                <div class="social-links">
+                    <a href="https://facebook.com/abjfoundation" target="_blank" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://twitter.com/abjfoundation" target="_blank" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://instagram.com/abjfoundation" target="_blank" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://linkedin.com/company/abjfoundation" target="_blank" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://youtube.com/abjfoundation" target="_blank" aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="donate.html">Make a Donation</a></li>
+                    <li><a href="request-help.html">Request Help</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="footer-section">
+                <h4>Our Services</h4>
+                <ul>
+                    <li><a href="#education">Education Support</a></li>
+                    <li><a href="#medical">Medical Aid</a></li>
+                    <li><a href="#food">Food Assistance</a></li>
+                    <li><a href="#shelter">Shelter Programs</a></li>
+                    <li><a href="#emergency">Emergency Relief</a></li>
+                    <li><a href="#widow">Widow Support</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="footer-section">
+                <h4>Stay Connected</h4>
+                <p>Subscribe to our newsletter for updates on our work and how you can help.</p>
+                <form id="newsletter-form" class="newsletter-form">
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+                <div class="newsletter-success" id="newsletter-success" style="display: none;">
+                    <i class="fas fa-check-circle"></i> Thank you for subscribing!
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="footer-contact">
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>123 Charity Street, Abuja, Nigeria</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <span>+234 123 456 7890</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>info@abjfoundation.org</span>
+            </div>
+            <div class="contact-item">
+                <i class="fab fa-whatsapp"></i>
+                <a href="https://wa.me/2341234567890?text=Hello%20ABJ%20Foundation" target="_blank">
+                    +234 123 456 7890
+                </a>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2024 ABJ Foundation. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
+                    <a href="cookies.html">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Newsletter subscription handler
+    document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const form = e.target;
+        const email = form.querySelector('input[type="email"]').value;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+
+        try {
+            // Show loading state
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            submitBtn.disabled = true;
+
+            // Submit newsletter subscription
+            await APIClient.post('/newsletter/subscribe', { email });
+
+            // Show success message
+            document.getElementById('newsletter-success').style.display = 'block';
+            form.style.display = 'none';
+
+            // Reset form after 3 seconds
+            setTimeout(() => {
+                document.getElementById('newsletter-success').style.display = 'none';
+                form.style.display = 'block';
+                form.reset();
+            }, 3000);
+
+        } catch (error) {
+            console.error('Newsletter subscription failed:', error);
+            // Show error (you can enhance this with a proper error display)
+            alert('Failed to subscribe. Please try again.');
+        } finally {
+            // Reset button
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+
+    // WhatsApp integration
+    function initWhatsApp() {
+        const whatsappLinks = document.querySelectorAll('a[href*="wa.me"]');
+        whatsappLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                // Track WhatsApp clicks (optional analytics)
+                console.log('WhatsApp contact initiated');
+            });
+        });
+    }
+
+    // Initialize footer functionality
+    document.addEventListener('DOMContentLoaded', () => {
+        initWhatsApp();
+    });
+</script>

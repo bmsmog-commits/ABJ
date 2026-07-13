@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#007bff">
+    <link rel="canonical" href="https://abjfoundation.ngo/notifications.html">
+    <title>Notifications - ABJ Foundation</title>
+    <meta name="description" content="View your notifications.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Alerts Container -->
+    <div id="alerts-container"></div>
+
+    <!-- Loader -->
+    <div id="loader" class="loading hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-logo">
+                <i class="fas fa-heart"></i> ABJ Foundation
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙</button>
+                <a href="dashboard.html" class="btn btn-outline">Dashboard</a>
+                <button id="logout-btn" class="btn btn-primary">Logout</button>
+                <button class="hamburger" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 80px 0; text-align: center; margin-top: 60px;">
+        <div class="container">
+            <h1>Notifications</h1>
+            <p>Stay updated with your ABJ Foundation activity</p>
+        </div>
+    </section>
+
+    <div class="wrapper" style="margin-top: 0;">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="dashboard.html">
+                        <i class="fas fa-chart-line"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="donate.html">
+                        <i class="fas fa-heart"></i>
+                        Make Donation
+                    </a>
+                </li>
+                <li>
+                    <a href="request-help.html">
+                        <i class="fas fa-hands-helping"></i>
+                        Request Help
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="notifications.html">
+                        <i class="fas fa-bell"></i>
+                        Notifications
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        Profile
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                    <h2>Notifications</h2>
+                    <button class="btn btn-outline" id="mark-all-read-btn" onclick="markAllAsRead();">
+                        <i class="fas fa-check-double"></i> Mark All as Read
+                    </button>
+                </div>
+
+                <!-- Notifications List -->
+                <div id="notifications-container">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>&copy; 2024 ABJ Foundation. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Load notifications
+        async function loadNotifications() {
+            try {
+                showLoading();
+                await DashboardManager.loadNotifications();
+                renderNotifications();
+            } catch (err) {
+                showAlert('Failed to load notifications', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Render notifications
+        function renderNotifications() {
+            const container = document.getElementById('notifications-container');
+            const notifications = DashboardManager.notifications || [];
+
+            if (notifications.length === 0) {
+                container.innerHTML = `
+                    <div class="card" style="text-align: center; padding: 40px;">
+                        <i class="fas fa-bell-slash" style="font-size: 3rem; color: #d1d5db; margin-bottom: 20px;"></i>
+                        <p style="color: #6b7280; font-size: 1.1rem;">No notifications yet</p>
+                        <p style="color: #9ca3af; font-size: 0.875rem;">Check back later for updates</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = notifications.map(notification => `
+                <div class="card ${notification.read ? '' : 'unread'}" style="margin-bottom: 15px; ${notification.read ? '' : 'border-left: 4px solid #2563eb; background: #f0f9ff;'}">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div style="flex: 1;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <h4 style="margin: 0; color: #1f2937;">
+                                    ${getNotificationIcon(notification.type)} ${notification.title}
+                                </h4>
+                                ${!notification.read ? '<span style="background: #2563eb; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">NEW</span>' : ''}
+                            </div>
+                            <p style="margin: 0 0 10px 0; color: #6b7280;">${notification.message}</p>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 0.75rem; color: #9ca3af;">
+                                    <i class="fas fa-clock"></i> ${getTimeAgo(notification.createdAt)}
+                                </span>
+                                <div style="display: flex; gap: 10px;">
+                                    ${!notification.read ? `<button class="btn btn-sm btn-outline" onclick="markAsRead('${notification._id}');">Mark as Read</button>` : ''}
+                                    <button class="btn btn-sm btn-danger" onclick="deleteNotification('${notification._id}');">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Get notification icon
+        function getNotificationIcon(type) {
+            const icons = {
+                'donation': '<i class="fas fa-heart" style="color: #dc2626;"></i>',
+                'help-request': '<i class="fas fa-hands-helping" style="color: #f59e0b;"></i>',
+                'approval': '<i class="fas fa-check-circle" style="color: #10b981;"></i>',
+                'update': '<i class="fas fa-info-circle" style="color: #2563eb;"></i>',
+                'system': '<i class="fas fa-cog" style="color: #6b7280;"></i>'
+            };
+            return icons[type] || '<i class="fas fa-bell"></i>';
+        }
+
+        // Mark as read
+        async function markAsRead(id) {
+            try {
+                showLoading();
+                await DashboardManager.markAsRead(id);
+                loadNotifications();
+                showAlert('Marked as read', 'success');
+            } catch (err) {
+                showAlert('Failed to mark as read', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Mark all as read
+        async function markAllAsRead() {
+            try {
+                showLoading();
+                await DashboardManager.markAllAsRead();
+                loadNotifications();
+                showAlert('All notifications marked as read', 'success');
+            } catch (err) {
+                showAlert('Failed to mark all as read', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Delete notification
+        async function deleteNotification(id) {
+            if (!confirm('Delete this notification?')) return;
+
+            try {
+                showLoading();
+                await DashboardManager.deleteNotification(id);
+                loadNotifications();
+                showAlert('Notification deleted', 'success');
+            } catch (err) {
+                showAlert('Failed to delete notification', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            AuthManager.requireAuth();
+            loadNotifications();
+        });
+    </script>
+</body>
+</html>

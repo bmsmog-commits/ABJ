@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#007bff">
+  <link rel="canonical" href="https://abjfoundation.ngo/request-help.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://abjfoundation.ngo/request-help.html">
+  <meta property="og:title" content="Request Help | ABJ Foundation">
+  <meta property="og:description" content="Request help from ABJ Foundation for emergency relief, medical aid, education or shelter support.">
+  <meta name="description" content="Request help from ABJ Foundation for emergency relief, medical aid, education or shelter support.">
+  <title>Request Help | ABJ Foundation</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">ABJ Foundation</a>
+      <nav class="main-nav" aria-label="Primary navigation">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="primary-menu">Menu</button>
+        <ul class="nav-menu" id="primary-menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="donate.html">Donate</a></li>
+          <li><a class="active" href="request-help.html">Request Help</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙</button></li>
+          <li><a class="btn btn-secondary" href="login.html">Login</a></li>
+          <li><a class="btn btn-primary" href="signup.html">Signup</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section section-hero request-hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Request Support</span>
+          <h1>Submit your request for urgent help.</h1>
+          <p>ABJ Foundation is here to review requests for widow support, medical aid, food assistance, child education and emergency relief.</p>
+        </div>
+        <div class="hero-media">
+          <div class="hero-card">
+            <img src="https://images.unsplash.com/photo-1500217052183-bc7de4500a31?auto=format&fit=crop&w=900&q=80" alt="Volunteer helping community member">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-form">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Get help now</span>
+          <h2>Complete the form and our team will verify your request.</h2>
+        </div>
+
+        <div class="card request-card">
+          <form id="help-request-form" class="validate-form" enctype="multipart/form-data" aria-label="Help request form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="help-name">Full Name</label>
+                <input type="text" id="help-name" name="name" placeholder="Your full name" required>
+              </div>
+              <div class="form-group">
+                <label for="help-email">Email</label>
+                <input type="email" id="help-email" name="email" placeholder="you@example.com" required>
+              </div>
+              <div class="form-group">
+                <label for="help-phone">Phone</label>
+                <input type="tel" id="help-phone" name="phone" placeholder="+234 123 456 7890" required>
+              </div>
+              <div class="form-group">
+                <label for="help-country">Country</label>
+                <input type="text" id="help-country" name="country" placeholder="Country" required>
+              </div>
+              <div class="form-group">
+                <label for="help-category">Category</label>
+                <select id="help-category" name="category" required>
+                  <option value="">Select category</option>
+                  <option value="widow-support">Widow Support</option>
+                  <option value="medical-aid">Medical Aid</option>
+                  <option value="food-support">Food Support</option>
+                  <option value="child-education">Child Education</option>
+                  <option value="shelter">Shelter</option>
+                  <option value="emergency-relief">Emergency Relief</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="help-description">Description</label>
+              <textarea id="help-description" name="description" rows="6" placeholder="Describe your situation and support needs" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="help-file">Upload proof document</label>
+              <input type="file" id="help-file" name="document" accept=".pdf,.doc,.docx,.jpg,.png">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit Request</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand footer-brand" href="index.html">ABJ Foundation</a>
+        <p>Committed to delivering compassionate support to vulnerable communities around the world.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="donate.html">Donate</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <p>hello@abjfoundation.org</p>
+        <p>+234 123 456 7890</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 ABJ Foundation. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/help.js"></script>
+</body>
+</html>
