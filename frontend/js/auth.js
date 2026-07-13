@@ -1,5 +1,5 @@
 class AuthAPI {
-  static baseURL = 'http://localhost:5000/api';
+  static baseURL = 'https://abj-production-375a.up.railway.app/api';
 
   static async request(endpoint, options = {}) {
     const url = `${this.baseURL}${endpoint}`;
