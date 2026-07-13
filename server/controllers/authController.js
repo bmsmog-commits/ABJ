@@ -11,33 +11,43 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   const userExists = await User.findOne({ email });
+
   if (userExists) {
     res.status(400);
     throw new Error('User already exists');
   }
 
-  const user = await User.create({ name, email, password, phone, country });
+  let user;
 
-  if (user) {
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      country: user.country,
-      role: user.role,
-      token: generateToken(user._id),
+  try {
+    user = await User.create({
+      name,
+      email,
+      password,
+      phone,
+      country,
     });
-  } else {
-    res.status(400);
-    throw new Error('Invalid user data');
+  } catch (error) {
+    console.error('REGISTER ERROR:', error);
+    throw error;
   }
+
+  res.status(201).json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    phone: user.phone,
+    country: user.country,
+    role: user.role,
+    token: generateToken(user._id),
+  });
 });
 
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
+
   if (user && (await user.matchPassword(password))) {
     res.json({
       _id: user._id,
@@ -99,4 +109,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { registerUser, authUser, getUserProfile, updateUserProfile };
+module.exports = {
+  registerUser,
+  authUser,
+  getUserProfile,
+  updateUserProfile,
+};
