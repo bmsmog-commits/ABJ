@@ -7,9 +7,11 @@ node_modules/
 # Logs
 *.log
 
-# OS files
-.DS_Store
-Thumbs.db
-
-# Editor settings
+# IDE files
 .vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
