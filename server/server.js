@@ -36,7 +36,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // Test Route
 app.get('/', (req, res) => {
-  res.send('ABJ Foundation API is running.');
+  console.log("Root endpoint was called");
+  res.status(200).json({
+    message: "ABJ Foundation API is running"
+  });
 });
 
 // API Routes
