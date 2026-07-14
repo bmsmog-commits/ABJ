@@ -31,11 +31,13 @@ const registerUser = asyncHandler(async (req, res) => {
       country,
     });
   } catch (error) {
+  console.error('==============================');
   console.error('REGISTER ERROR MESSAGE:', error.message);
-  console.error('REGISTER ERROR STACK:', error.stack);
-  console.error(error);
+  console.error('REGISTER ERROR NAME:', error.name);
+  console.error('REGISTER ERROR:', error);
+  console.error('==============================');
   throw error;
-}
+ }
 
   res.status(201).json({
     _id: user._id,
