@@ -5,6 +5,9 @@ const generateToken = require('../utils/generateToken');
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password, phone, country } = req.body;
 
+  // Log the incoming request
+  console.log('REGISTER BODY:', req.body);
+
   if (!name || !email || !password) {
     res.status(400);
     throw new Error('Please provide name, email, and password');
