@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+
     email: {
       type: String,
       required: true,
@@ -15,35 +16,43 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
+
     password: {
       type: String,
       required: true,
     },
+
     phone: {
       type: String,
       trim: true,
     },
+
     country: {
       type: String,
       trim: true,
     },
+
     role: {
       type: String,
       enum: ['user', 'admin'],
       default: 'user',
     },
+
     emailVerified: {
       type: Boolean,
       default: false,
     },
+
     verificationToken: {
       type: String,
       default: null,
     },
+
     resetToken: {
       type: String,
       default: null,
     },
+
     resetTokenExpires: {
       type: Date,
       default: null,
@@ -54,6 +63,8 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+
+// Hash password before saving user
 userSchema.pre('save', async function (next) {
   try {
     if (!this.isModified('password')) {
@@ -64,14 +75,18 @@ userSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, salt);
 
     next();
+
   } catch (error) {
     console.error('BCRYPT ERROR:', error);
     next(error);
   }
 });
 
+
+// Compare entered password during login
 userSchema.methods.matchPassword = async function (enteredPassword) {
-  return bcrypt.compare(enteredPassword, this.password);
+  return await bcrypt.compare(enteredPassword, this.password);
 };
+
 
 module.exports = mongoose.model('User', userSchema);
