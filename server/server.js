@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
@@ -33,6 +34,18 @@ app.use(
 // Body parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+const frontendPath = path.join(__dirname, '..', 'frontend');
+
+app.get('/verify-email/:token', (req, res) => {
+  res.sendFile(path.join(frontendPath, 'verify-email.html'));
+});
+
+app.get('/reset-password/:token', (req, res) => {
+  res.sendFile(path.join(frontendPath, 'reset-password.html'));
+});
+
+app.use(express.static(frontendPath));
 
 // Test Route
 app.get('/', (req, res) => {
